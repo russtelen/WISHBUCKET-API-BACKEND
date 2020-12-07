@@ -9,7 +9,7 @@
 # Wishbucket - Easy Wishlists
 
 Elevator Pitch:
-A lightweight application with a slick look and feel featuring shareable wishlists in an easy breeze. Create a wishlist for yourself or someone else, and share it with others - the days of unwanted or duplicated gifts are over!
+A lightweight application with a slick look and feel featuring shareable wishlists in an easy breeze. Quickly create a wishlist for yourself or someone else, and share it with others - the days of unwanted or duplicated gifts are over!
 
 ### Figma Wireframe
 
