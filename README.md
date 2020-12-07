@@ -6,6 +6,16 @@
 - Vlad
 - Russ
 
+# Wishbucket - Easy Wishlists
+
+Elevator Pitch:
+A lightweight application with a slick look and feel featuring shareable wishlists in an easy breeze. Create a wishlist for yourself or someone else, and share it with others - the days of unwanted or duplicated gifts are over!
+
+### Figma Wireframe
+
+URL: https://www.figma.com/file/qOWCw5hQsP4Xu5bkBxXUcq/WishBucket?node-id=0%3A1
+
+![WFM](https://i.imgur.com/KQBOscC.jpg)
 
 ## Project Reqs 📋
 
@@ -41,6 +51,7 @@
   - less NET code
 
 ## ERD
+
 ![ERD](https://i.imgur.com/htCdxTe.png)
 
 ## Timeline 🕗
@@ -73,24 +84,19 @@
           - Password
           - <Items>
           - Duedate?
-        - Items :
-          - Name
-          - Description?
-          - Size?
-          - Price?
-          - URL?
-      Public can see , dont need to be logged in
-      GET
-      /wishlist/:id
-      NEED TO BE LOGGED IN
-      GETALL
-      /wishlist
-      POST
-      /wishlist/create/
-      EDIT
-      /wishlist/edit/:id
-      DELETE
-      /wishlist/delete:id
+        - Items : - Name - Description? - Size? - Price? - URL?
+          Public can see , dont need to be logged in
+          GET
+          /wishlist/:id
+          NEED TO BE LOGGED IN
+          GETALL
+          /wishlist
+          POST
+          /wishlist/create/
+          EDIT
+          /wishlist/edit/:id
+          DELETE
+          /wishlist/delete:id
 - Dec 7 :
   - README project idea/scope
   - ~20 backlogs
