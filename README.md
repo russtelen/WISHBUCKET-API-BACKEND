@@ -13,7 +13,7 @@ A lightweight application with a slick look and feel featuring shareable wishlis
 
 ### Figma Wireframe
 
-URL: https://www.figma.com/file/qOWCw5hQsP4Xu5bkBxXUcq/WishBucket?node-id=0%3A1
+Figma URL: https://www.figma.com/file/qOWCw5hQsP4Xu5bkBxXUcq/WishBucket?node-id=0%3A1
 
 ![WFM](https://i.imgur.com/KQBOscC.jpg)
 
