@@ -6,6 +6,7 @@
 - Vlad
 - Russ
 
+
 ## Project Reqs 📋
 
 #### Design Req
@@ -38,6 +39,9 @@
 
 - API is easier
   - less NET code
+
+## ERD
+![ERD](https://i.imgur.com/htCdxTe.png)
 
 ## Timeline 🕗
 
