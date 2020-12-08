@@ -19,7 +19,6 @@ namespace GiftWishlist.Models
         public string Description { get; set; }
         public string ImageURL { get; set; }
         public string PurchaseURL { get; set; }
-
         public decimal Price { get; set; }
 
     }
