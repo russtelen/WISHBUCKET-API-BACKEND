@@ -12,8 +12,10 @@ namespace GiftWishlist.Models
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Password { get; set; }
-        public DateTime DueDate { get; set; }
+        public string? Password { get; set; }
+        public DateTime? DueDate { get; set; }
+
+        //public virtual ICollection<Item> Items { get; set; } 
 
 
     }
