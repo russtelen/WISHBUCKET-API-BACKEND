@@ -7,14 +7,20 @@ using System.Threading.Tasks;
 
 namespace GiftWishlist.Models
 {
-    public class Wishlist
+    public class Item
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        public int WishlistId { get; set; } // Make this a Foreign Key 
         public string Name { get; set; }
-        public string Password { get; set; }
-        public DateTime DueDate { get; set; }
+        public bool IsComplete { get; set; }
 
+        // Below are Optional
+        public string Description { get; set; }
+        public string ImageURL { get; set; }
+        public string PurchaseURL { get; set; }
+
+        public decimal Price { get; set; }
 
     }
 }
