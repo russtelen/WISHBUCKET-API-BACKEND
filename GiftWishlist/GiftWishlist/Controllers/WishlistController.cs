@@ -1,4 +1,5 @@
 ﻿using GiftWishlist.Data;
+using GiftWishlist.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -59,6 +60,20 @@ namespace GiftWishlist.Controllers
             {
                 return BadRequest(e);
             }
+        }
+
+        [HttpPost]
+        public IActionResult Create([FromBody] Wishlist wishlist)
+        {
+            if (wishlist.Id <= 0) // Any other bad inputs?
+            {
+                return BadRequest();
+            }
+
+            _db.Wishlists.Add(wishlist);
+            _db.SaveChanges();
+            //return CreatedAtRoute("GetOne", new { id = wishlist.Id });
+            return Ok();
         }
 
     }
