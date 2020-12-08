@@ -50,11 +50,11 @@ Figma URL: https://www.figma.com/file/qOWCw5hQsP4Xu5bkBxXUcq/WishBucket?node-id=
 - API is easier
   - less NET code
 
-## UCD
+## Use Case Diagram (UCD)
 
 ![UCD](https://i.imgur.com/TtijKPC.jpg)
 
-## ERD
+## Entity Relationship Diagram (ERD)
 
 ![ERD](https://i.imgur.com/htCdxTe.png)
 
