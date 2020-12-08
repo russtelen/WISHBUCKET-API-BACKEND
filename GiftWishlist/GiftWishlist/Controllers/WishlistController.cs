@@ -76,5 +76,29 @@ namespace GiftWishlist.Controllers
             return Ok();
         }
 
+        [HttpPut]
+        public IActionResult Update([FromBody] Wishlist newWishlist)
+        {
+            try
+            {
+                var wishlist = _db.Wishlists.Where(t => t.Id == newWishlist.Id).FirstOrDefault();
+
+                if (wishlist == null)
+                {
+                    return NotFound();
+                }
+
+                wishlist.Name = newWishlist.Name;
+                wishlist.DueDate = newWishlist.DueDate;
+
+                _db.SaveChanges();
+
+                return Ok(wishlist);
+
+            } catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
     }
 }
