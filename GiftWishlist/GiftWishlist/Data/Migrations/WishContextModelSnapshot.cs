@@ -34,7 +34,7 @@ namespace GiftWishlist.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("Price")
+                    b.Property<decimal?>("Price")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("PurchaseURL")
@@ -46,6 +46,41 @@ namespace GiftWishlist.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Items");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "",
+                            ImageURL = "",
+                            IsComplete = false,
+                            Name = "Socks",
+                            Price = 12.00m,
+                            PurchaseURL = "",
+                            WishlistId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "",
+                            ImageURL = "",
+                            IsComplete = false,
+                            Name = "Mug",
+                            Price = 10.00m,
+                            PurchaseURL = "",
+                            WishlistId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "",
+                            ImageURL = "",
+                            IsComplete = false,
+                            Name = "Gaming Mouse",
+                            Price = 50.00m,
+                            PurchaseURL = "",
+                            WishlistId = 2
+                        });
                 });
 
             modelBuilder.Entity("GiftWishlist.Models.Wishlist", b =>
@@ -54,7 +89,7 @@ namespace GiftWishlist.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("DueDate")
+                    b.Property<DateTime?>("DueDate")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
@@ -71,7 +106,7 @@ namespace GiftWishlist.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DueDate = new DateTime(2020, 12, 8, 14, 37, 2, 519, DateTimeKind.Local).AddTicks(4929),
+                            DueDate = new DateTime(2020, 12, 8, 14, 58, 28, 295, DateTimeKind.Local).AddTicks(3588),
                             Name = "Secret Santa 2020",
                             Password = ""
                         },
@@ -85,7 +120,7 @@ namespace GiftWishlist.Data.Migrations
                         new
                         {
                             Id = 3,
-                            DueDate = new DateTime(2020, 12, 8, 14, 37, 2, 523, DateTimeKind.Local).AddTicks(855),
+                            DueDate = new DateTime(2020, 12, 8, 14, 58, 28, 301, DateTimeKind.Local).AddTicks(6104),
                             Name = "Secret Santa 2020",
                             Password = ""
                         });
