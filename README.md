@@ -50,6 +50,10 @@ Figma URL: https://www.figma.com/file/qOWCw5hQsP4Xu5bkBxXUcq/WishBucket?node-id=
 - API is easier
   - less NET code
 
+## UCD
+
+![UCD](https://i.imgur.com/TtijKPC.jpg)
+
 ## ERD
 
 ![ERD](https://i.imgur.com/htCdxTe.png)
