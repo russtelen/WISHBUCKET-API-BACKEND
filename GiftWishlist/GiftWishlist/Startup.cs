@@ -27,10 +27,25 @@ namespace GiftWishlist
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-            services.AddControllers().AddNewtonsoftJson();
+            //Wish Connection String
             services.AddDbContext<WishContext>(options => 
                 options.UseSqlite(Configuration.GetConnectionString("WishConnection")));
+
+            //Configure CORS
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                    builder =>
+                    {
+                        builder
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                    });
+            });
+
+            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +63,8 @@ namespace GiftWishlist
             app.UseAuthorization();
 
             app.UseAuthentication();
+
+            app.UseCors("AllowAll");
 
             app.UseEndpoints(endpoints =>
             {
