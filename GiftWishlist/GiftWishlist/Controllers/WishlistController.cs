@@ -62,6 +62,8 @@ namespace GiftWishlist.Controllers
             }
         }
 
+
+
         [HttpPost]
         public IActionResult Create([FromBody] Wishlist wishlist)
         {
@@ -99,6 +101,21 @@ namespace GiftWishlist.Controllers
             {
                 return BadRequest(e);
             }
+        }
+
+        //Delete
+        [HttpDelete]
+        [Route("MyDelete")] // Custom Route
+        public IActionResult MyDelete(long Id)
+        {
+            var item = _db.Wishlists.Where(t => t.Id == Id).FirstOrDefault();
+            if (item == null)
+            {
+                return NotFound();
+            }
+            _db.Wishlists.Remove(item);
+            _db.SaveChanges();
+            return new ObjectResult(item);
         }
     }
 }
