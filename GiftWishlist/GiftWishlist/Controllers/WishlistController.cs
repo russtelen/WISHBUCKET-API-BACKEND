@@ -19,5 +19,47 @@ namespace GiftWishlist.Controllers
             _db = db;
         }
 
+        // GetAll() is automatically recognized as
+        // https://localhost:<port #>/api/todo
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+
+            try
+            {
+                var wishlist = _db.Wishlists.ToList();
+                if (wishlist == null || wishlist.Count < 1)
+                {
+                    return NotFound();
+                }
+
+                return Ok(wishlist);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+            
+        }
+
+        //Detail
+        [HttpGet("{id}", Name = "GetOne")]
+        public IActionResult GetById(int id)
+        {
+            try
+            {
+                var wishlist = _db.Wishlists.Where(t => t.Id == id).FirstOrDefault();
+                if (wishlist == null)
+                {
+                    return NotFound();
+                }
+                return Ok(wishlist);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
     }
 }

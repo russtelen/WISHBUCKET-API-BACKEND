@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using GiftWishlist.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace GiftWishlist.Data
     public class WishContext:DbContext
     {
         public WishContext(DbContextOptions<WishContext> options) : base(options) { }
-        //public DbSet<Wishes> Wishes {get; set;}
+        public DbSet<Wishlist> Wishlists {get; set;}
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Seeder function
