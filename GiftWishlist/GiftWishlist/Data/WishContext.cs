@@ -11,6 +11,8 @@ namespace GiftWishlist.Data
     {
         public WishContext(DbContextOptions<WishContext> options) : base(options) { }
         public DbSet<Wishlist> Wishlists {get; set;}
+        public DbSet<Item> Items { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Seeder function
