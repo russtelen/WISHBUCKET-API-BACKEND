@@ -19,7 +19,7 @@ namespace GiftWishlist.Data.Migrations
                     Description = table.Column<string>(nullable: true),
                     ImageURL = table.Column<string>(nullable: true),
                     PurchaseURL = table.Column<string>(nullable: true),
-                    Price = table.Column<decimal>(nullable: false)
+                    Price = table.Column<decimal>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -34,7 +34,7 @@ namespace GiftWishlist.Data.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true),
-                    DueDate = table.Column<DateTime>(nullable: false)
+                    DueDate = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -42,9 +42,24 @@ namespace GiftWishlist.Data.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Items",
+                columns: new[] { "Id", "Description", "ImageURL", "IsComplete", "Name", "Price", "PurchaseURL", "WishlistId" },
+                values: new object[] { 1, "", "", false, "Socks", 12.00m, "", 1 });
+
+            migrationBuilder.InsertData(
+                table: "Items",
+                columns: new[] { "Id", "Description", "ImageURL", "IsComplete", "Name", "Price", "PurchaseURL", "WishlistId" },
+                values: new object[] { 2, "", "", false, "Mug", 10.00m, "", 1 });
+
+            migrationBuilder.InsertData(
+                table: "Items",
+                columns: new[] { "Id", "Description", "ImageURL", "IsComplete", "Name", "Price", "PurchaseURL", "WishlistId" },
+                values: new object[] { 3, "", "", false, "Gaming Mouse", 50.00m, "", 2 });
+
+            migrationBuilder.InsertData(
                 table: "Wishlists",
                 columns: new[] { "Id", "DueDate", "Name", "Password" },
-                values: new object[] { 1, new DateTime(2020, 12, 8, 14, 37, 2, 519, DateTimeKind.Local).AddTicks(4929), "Secret Santa 2020", "" });
+                values: new object[] { 1, new DateTime(2020, 12, 8, 14, 58, 28, 295, DateTimeKind.Local).AddTicks(3588), "Secret Santa 2020", "" });
 
             migrationBuilder.InsertData(
                 table: "Wishlists",
@@ -54,7 +69,7 @@ namespace GiftWishlist.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Wishlists",
                 columns: new[] { "Id", "DueDate", "Name", "Password" },
-                values: new object[] { 3, new DateTime(2020, 12, 8, 14, 37, 2, 523, DateTimeKind.Local).AddTicks(855), "Secret Santa 2020", "" });
+                values: new object[] { 3, new DateTime(2020, 12, 8, 14, 58, 28, 301, DateTimeKind.Local).AddTicks(6104), "Secret Santa 2020", "" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
