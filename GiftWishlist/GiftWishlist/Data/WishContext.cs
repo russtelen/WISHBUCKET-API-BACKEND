@@ -10,7 +10,7 @@ namespace GiftWishlist.Data
     public class WishContext:DbContext
     {
         public WishContext(DbContextOptions<WishContext> options) : base(options) { }
-        public DbSet<Item> Items {get; set;}
+        public DbSet<Wishlist> Wishlists {get; set;}
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Seeder function

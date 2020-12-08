@@ -27,19 +27,38 @@ namespace GiftWishlist.Controllers
 
             try
             {
-                var items = _db.Items.ToList();
-                if (items == null || items.Count < 1)
+                var wishlist = _db.Wishlists.ToList();
+                if (wishlist == null || wishlist.Count < 1)
                 {
                     return NotFound();
                 }
 
-                return Ok(items);
+                return Ok(wishlist);
             }
             catch (Exception e)
             {
                 return BadRequest(e);
             }
             
+        }
+
+        //Detail
+        [HttpGet("{id}", Name = "GetOne")]
+        public IActionResult GetById(int id)
+        {
+            try
+            {
+                var wishlist = _db.Wishlists.Where(t => t.Id == id).FirstOrDefault();
+                if (wishlist == null)
+                {
+                    return NotFound();
+                }
+                return Ok(wishlist);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
         }
 
     }
