@@ -50,11 +50,48 @@ Figma URL: https://www.figma.com/file/qOWCw5hQsP4Xu5bkBxXUcq/WishBucket?node-id=
 - API is easier
   - less NET code
 
-## ERD
+## Use Case Diagram (UCD)
+
+![UCD](https://i.imgur.com/TtijKPC.jpg)
+
+## Entity Relationship Diagram (ERD)
 
 ![ERD](https://i.imgur.com/htCdxTe.png)
 
-## Timeline 🕗
+# Requirements
+
+## Functional
+
+- User Accounts
+- Wishlists (CRUD)
+- Items (CRUD)
+- Item status (fulfilled/pending)
+- Link sharing
+
+## Non-Functional
+
+- List of all wishlists (dashboard)
+- List the items in a wishlist
+- Wishlist filtered by date
+
+# Features
+
+## Must-have
+
+- Authentication
+- Database
+- Sort wishlists by active/inactive, then date
+
+## Nice-to-have
+
+- User Groups
+- Private/Public wishlists
+- Search public wishlists
+- Due date notifications
+- Item status notification
+- Security (recaptcha, login request delay, user password requirements)
+
+# Timeline 🕗
 
 - Dec 5 :
   - Brainstorm app :heavy_check_mark:
