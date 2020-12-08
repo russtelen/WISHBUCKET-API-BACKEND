@@ -58,20 +58,26 @@ namespace GiftWishlist.Controllers
         [HttpPost("Register")]
         public async Task<JsonResult> RegisterAsync([FromBody] RegisterVM registerVM)
         {
-            if (ModelState.IsValid)
-            {
-                var user = new IdentityUser { UserName = registerVM.Email, Email = registerVM.Email, EmailConfirmed = true };
-                var result = await _userManager.CreateAsync(user, registerVM.Password);
-
-                if (result.Succeeded)
-                {
-                    return await SignInAsync(new LoginVM() { Email = registerVM.Email, Password = registerVM.Password });
-                }
-
-            }
             dynamic jsonResponse = new JObject();
+
+            if (!ModelState.IsValid)
+            {
+                jsonResponse.token = "";
+                jsonResponse.status = "Bad request";
+                return Json(jsonResponse);
+            }
+
+            var user = new IdentityUser { UserName = registerVM.Email, Email = registerVM.Email, EmailConfirmed = true };
+            var result = await _userManager.CreateAsync(user, registerVM.Password);
+
+            if (result.Succeeded)
+            {
+                return await SignInAsync(new LoginVM() { Email = registerVM.Email, Password = registerVM.Password });
+            }
+
+            var errors = result.Errors.Select(e => e.Description);
             jsonResponse.token = "";
-            jsonResponse.status = "Registration Failed";
+            jsonResponse.status = String.Join(',', errors);
             return Json(jsonResponse);
         }
 
@@ -79,36 +85,45 @@ namespace GiftWishlist.Controllers
         public async Task<JsonResult> SignInAsync([FromBody] LoginVM loginVM)
         {
             dynamic jsonResponse = new JObject();
-            if (ModelState.IsValid)
+
+            if (!ModelState.IsValid)
             {
-                var result = await
-                    _signInManager.PasswordSignInAsync(
-                        loginVM.Email.ToUpper(),
-                        loginVM.Password, 
-                        loginVM.RememberMe, 
-                        lockoutOnFailure: true);
-                if (result.Succeeded)
+                jsonResponse.token = "";
+                jsonResponse.status = "Bad request";
+                return Json(jsonResponse);
+            }
+
+
+            var result = await
+                _signInManager.PasswordSignInAsync(
+                    loginVM.Email.ToUpper(),
+                    loginVM.Password,
+                    loginVM.RememberMe,
+                    lockoutOnFailure: true);
+
+            if (result.Succeeded)
+            {
+                var user = await _userManager.FindByEmailAsync(loginVM.Email);
+                if (user != null)
                 {
-                    var user = await _userManager.FindByEmailAsync(loginVM.Email);
-                    if (user != null)
-                    {
-                        var tokenString = GenerateJSONWebToken(user);
-                        jsonResponse.token = tokenString;
-                        jsonResponse.status = "OK";
-                        return Json(jsonResponse);
-                    }
-                }
-                else if (result.IsLockedOut)
-                {
-                    jsonResponse.token = "";
-                    jsonResponse.status = "Locked Out";
+                    var tokenString = GenerateJSONWebToken(user);
+                    jsonResponse.token = tokenString;
+                    jsonResponse.status = "OK";
                     return Json(jsonResponse);
                 }
             }
+            else if (result.IsLockedOut)
+            {
+                jsonResponse.token = "";
+                jsonResponse.status = "Locked Out";
+                return Json(jsonResponse);
+            }
+
             jsonResponse.token = "";
             jsonResponse.status = "Invalid Login";
             return Json(jsonResponse);
         }
+
     }
 }
 
