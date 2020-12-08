@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using GiftWishlist.Data;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,12 @@ namespace GiftWishlist.Controllers
     [ApiController]
     public class WishlistController : ControllerBase
     {
-        private readonly 
+        private readonly WishContext _db;
+
+        public WishlistController(WishContext db)
+        {
+            _db = db;
+        }
 
     }
 }
