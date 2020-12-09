@@ -107,7 +107,7 @@ namespace GiftWishlist.Controllers
                     .Where(t => t.Id == newWishlist.Id)
                     .FirstOrDefault();
 
-                if (wishlist == null)
+                if (wishlist == null || !ModelState.IsValid)
                 {
                     return NotFound();
                 }
