@@ -7,15 +7,18 @@ using System.Threading.Tasks;
 
 namespace GiftWishlist.Models
 {
-    public class Wishlist
+    public class Wishlist:BaseEntity
     {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+
+        public Wishlist()
+        {
+            this.Items = new List<Item>();
+        }
         public string Name { get; set; }
-        public string? Password { get; set; }
+        public string Password { get; set; }
         public DateTime? DueDate { get; set; }
 
-        //public virtual ICollection<Item> Items { get; set; } 
+        public virtual ICollection<Item> Items { get; set; } 
 
 
     }

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace GiftWishlist.Data.Migrations
+namespace GiftWishlist.Migrations
 {
     [DbContext(typeof(WishContext))]
     partial class WishContextModelSnapshot : ModelSnapshot
@@ -34,53 +34,23 @@ namespace GiftWishlist.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("OwnerEmail")
+                        .HasColumnType("TEXT");
+
                     b.Property<decimal?>("Price")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("PurchaseURL")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("WishlistId")
+                    b.Property<int>("WishlistID")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Items");
+                    b.HasIndex("WishlistID");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "",
-                            ImageURL = "",
-                            IsComplete = false,
-                            Name = "Socks",
-                            Price = 12.00m,
-                            PurchaseURL = "",
-                            WishlistId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "",
-                            ImageURL = "",
-                            IsComplete = false,
-                            Name = "Mug",
-                            Price = 10.00m,
-                            PurchaseURL = "",
-                            WishlistId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "",
-                            ImageURL = "",
-                            IsComplete = false,
-                            Name = "Gaming Mouse",
-                            Price = 50.00m,
-                            PurchaseURL = "",
-                            WishlistId = 2
-                        });
+                    b.ToTable("Items");
                 });
 
             modelBuilder.Entity("GiftWishlist.Models.Wishlist", b =>
@@ -106,7 +76,7 @@ namespace GiftWishlist.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DueDate = new DateTime(2020, 12, 8, 14, 58, 28, 295, DateTimeKind.Local).AddTicks(3588),
+                            DueDate = new DateTime(2020, 12, 9, 10, 36, 35, 990, DateTimeKind.Local).AddTicks(478),
                             Name = "Secret Santa 2020",
                             Password = ""
                         },
@@ -120,10 +90,19 @@ namespace GiftWishlist.Data.Migrations
                         new
                         {
                             Id = 3,
-                            DueDate = new DateTime(2020, 12, 8, 14, 58, 28, 301, DateTimeKind.Local).AddTicks(6104),
+                            DueDate = new DateTime(2020, 12, 9, 10, 36, 35, 993, DateTimeKind.Local).AddTicks(3492),
                             Name = "Secret Santa 2020",
                             Password = ""
                         });
+                });
+
+            modelBuilder.Entity("GiftWishlist.Models.Item", b =>
+                {
+                    b.HasOne("GiftWishlist.Models.Wishlist", null)
+                        .WithMany("Items")
+                        .HasForeignKey("WishlistID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -54,6 +54,7 @@ namespace GiftWishlist.Controllers
                 {
                     return NotFound();
                 }
+                _db.SaveChanges();
                 return Ok(wishlist);
             }
             catch (Exception e)
@@ -103,10 +104,8 @@ namespace GiftWishlist.Controllers
             }
         }
 
-        //Delete
         [HttpDelete]
-        [Route("MyDelete")] // Custom Route
-        public IActionResult MyDelete(long Id)
+        public IActionResult Delete(long Id)
         {
             var item = _db.Wishlists.Where(t => t.Id == Id).FirstOrDefault();
             if (item == null)
@@ -116,6 +115,69 @@ namespace GiftWishlist.Controllers
             _db.Wishlists.Remove(item);
             _db.SaveChanges();
             return new ObjectResult(item);
+        }
+
+        // ITEM ROUTES
+
+        [HttpGet]
+        [Route("{listId}/items/")]
+        public IActionResult GetAllItems(int listId)
+        {
+
+            try
+            {
+                var wishlist = _db.Wishlists.Where(t => t.Id == listId).FirstOrDefault();
+                if (wishlist == null || wishlist.Items.Count < 1)
+                {
+                    return NotFound();
+                }
+                var items = wishlist.Items.ToList();
+                return Ok(items);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+
+        }
+
+        [HttpGet]
+        [Route("{listId}/item/{itemId}")]
+        public IActionResult GetItemById(int listId, int itemId)
+        {
+            try
+            {
+                var wishlist = _db.Wishlists.Where(t => t.Id == listId).FirstOrDefault();
+                if (wishlist == null)
+                {
+                    return NotFound();
+                }
+   
+                var item = wishlist.Items.Where(i => i.Id == itemId).FirstOrDefault();
+
+                if (item == null)
+                {
+                    return NotFound();
+                }
+                return Ok(item);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
+        [HttpPost]
+        [Route("{listId}/item/")]
+        public IActionResult CreateItem(int listId, [FromBody] Item item)
+        {
+
+            var wishlist = _db.Wishlists.Where(t => t.Id == listId).FirstOrDefault();
+
+            wishlist.Items.Add(item);
+            _db.SaveChanges();
+            //return CreatedAtRoute("GetOne", new { id = wishlist.Id });
+            return Ok(wishlist);
         }
     }
 }

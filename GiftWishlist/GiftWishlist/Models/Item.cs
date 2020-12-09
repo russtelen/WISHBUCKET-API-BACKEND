@@ -7,18 +7,21 @@ using System.Threading.Tasks;
 
 namespace GiftWishlist.Models
 {
-    public class Item
+    public class Item:BaseEntity
     {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-        public int WishlistId { get; set; } // Make this a Foreign Key 
+ 
         public string Name { get; set; }
         public bool IsComplete { get; set; }
 
+        public int WishlistID { get; set; }
+        
+        public string OwnerEmail { get; set; }
+
         // Below are Optional
-        public string? Description { get; set; }
-        public string? ImageURL { get; set; }
-        public string? PurchaseURL { get; set; }
+        public string Description { get; set; }
+        public string ImageURL { get; set; }
+        public string PurchaseURL { get; set; }
+        [DataType(DataType.Currency)]
         public decimal? Price { get; set; }
 
     }
