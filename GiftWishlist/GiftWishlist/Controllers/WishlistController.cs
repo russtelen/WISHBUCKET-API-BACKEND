@@ -187,5 +187,52 @@ namespace GiftWishlist.Controllers
                 return BadRequest(e);
             }
         }
+
+        [HttpDelete]
+        [Route("{listId}/item/{itemId}")]
+        public IActionResult DeleteItem(int listId, int itemId)
+        {
+            try
+            {
+                var wishlist = _db.Wishlists.Where(t => t.Id == listId).FirstOrDefault();
+                if (wishlist == null)
+                {
+                    return NotFound();
+                }
+
+                var item = wishlist.Items.Where(i => i.Id == itemId).FirstOrDefault();
+                wishlist.Items.Remove(item);
+                _db.SaveChanges();
+                return new ObjectResult(item);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
+        [HttpPut]
+        [Route("{listId}/item/{itemId}")]
+        public IActionResult GetByParams(int listId, int itemId, [FromBody] Item newItem)
+        {
+            var wishlist = _db.Wishlists.Where(t => t.Id == listId).FirstOrDefault();
+            var item = wishlist.Items.Where(i => i.Id == itemId).FirstOrDefault();
+            if (wishlist == null || item == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                item.IsComplete = newItem.IsComplete;
+                item.Name = newItem.Name;
+                item.PurchaseURL = newItem.PurchaseURL;
+                item.Price = newItem.Price;
+                item.ImageURL = newItem.ImageURL;
+                _db.SaveChanges();
+            }
+            return new ObjectResult(item);
+        }
+
+
     }
 }
