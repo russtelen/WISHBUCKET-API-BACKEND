@@ -44,6 +44,7 @@ namespace GiftWishlist.Controllers
             {
                 var wishlist = _db.Wishlists
                     .Include(i => i.Items)
+                    .Where(w => w.Password == "")
                     .ToList();
 
                 if (wishlist == null || wishlist.Count < 1)
@@ -62,13 +63,13 @@ namespace GiftWishlist.Controllers
 
         //Detail
         [HttpGet("{id}", Name = "GetOne")]
-        public IActionResult GetById(int id)
+        public IActionResult GetById(int id, string password)
         {
             try
             {
                 var wishlist = _db.Wishlists
                     .Include(i => i.Items)
-                    .Where(t => t.Id == id)
+                    .Where(t => t.Id == id && t.Password == password)
                     .FirstOrDefault();
 
                 if (wishlist == null)
