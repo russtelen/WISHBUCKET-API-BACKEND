@@ -14,8 +14,6 @@ namespace GiftWishlist.Models
         public bool IsComplete { get; set; }
 
         public int WishlistID { get; set; }
-        
-        public string OwnerEmail { get; set; }
 
         // Below are Optional
         public string Description { get; set; }

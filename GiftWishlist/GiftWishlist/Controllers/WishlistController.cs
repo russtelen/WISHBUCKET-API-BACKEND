@@ -171,13 +171,21 @@ namespace GiftWishlist.Controllers
         [Route("{listId}/item/")]
         public IActionResult CreateItem(int listId, [FromBody] Item item)
         {
-
-            var wishlist = _db.Wishlists.Where(t => t.Id == listId).FirstOrDefault();
-
-            wishlist.Items.Add(item);
-            _db.SaveChanges();
-            //return CreatedAtRoute("GetOne", new { id = wishlist.Id });
-            return Ok(wishlist);
+            if (item.Name == null || item.Name == "" || !item.IsComplete)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                var wishlist = _db.Wishlists.Where(t => t.Id == listId).FirstOrDefault();
+                wishlist.Items.Add(item);
+                _db.SaveChanges();
+                return Ok(wishlist);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
         }
     }
 }
