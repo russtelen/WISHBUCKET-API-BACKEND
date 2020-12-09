@@ -22,16 +22,17 @@ namespace GiftWishlist.Controllers
             _db = db;
         }
 
-        private List<WishlistVM> WishlistsToVM()
-        {
-            return _db.Wishlists.Select(w => new WishlistVM
-            {
-                Id = w.Id,
-                Name = w.Name,
-                Password = w.Password,
-                DueDate = w.DueDate
-            }).ToList();
-        }
+        //private List<WishlistVM> WishlistsToVM()
+        //{
+        //    return _db.Wishlists
+        //        .Select(w => new WishlistVM
+        //    {
+        //        Id = w.Id,
+        //        Name = w.Name,
+        //        Password = w.Password,
+        //        DueDate = w.DueDate
+        //    }).ToList();
+        //}
 
         // GetAll() is automatically recognized as
         // https://localhost:<port #>/api/todo
@@ -41,7 +42,10 @@ namespace GiftWishlist.Controllers
 
             try
             {
-                var wishlist = WishlistsToVM();
+                var wishlist = _db.Wishlists
+                    .Include(i => i.Items)
+                    .ToList();
+
                 if (wishlist == null || wishlist.Count < 1)
                 {
                     return NotFound();
@@ -62,7 +66,8 @@ namespace GiftWishlist.Controllers
         {
             try
             {
-                var wishlist = WishlistsToVM()
+                var wishlist = _db.Wishlists
+                    .Include(i => i.Items)
                     .Where(t => t.Id == id)
                     .FirstOrDefault();
 
@@ -83,7 +88,7 @@ namespace GiftWishlist.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] Wishlist wishlist)
         {
-            if (wishlist.Name == "") // Any other bad inputs?
+            if (wishlist.Name == "" || !ModelState.IsValid) // Any other bad inputs?
             {
                 return BadRequest();
             }  
@@ -181,7 +186,7 @@ namespace GiftWishlist.Controllers
         [Route("{listId}/item/")]
         public IActionResult CreateItem(int listId, [FromBody] Item item)
         {
-            if (item.Name == null || item.Name == "")
+            if (item.Name == null || item.Name == ""|| !ModelState.IsValid)
             {
                 return BadRequest();
             }
