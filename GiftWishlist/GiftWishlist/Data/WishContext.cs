@@ -17,11 +17,11 @@ namespace GiftWishlist.Data
         {
 
             // Seed Data
-            modelBuilder.Entity<Wishlist>().HasData(
-                new { Id = 1, Name = "Secret Santa 2020", Password = "", DueDate = DateTime.Now },
-                new { Id = 2, Name = "SSD Completion Party", Password = "ssd", DueDate = new DateTime(2020, 5, 14, 13, 00, 02) },
-                new { Id = 3, Name = "Secret Santa 2020", Password = "", DueDate = DateTime.Now }
-            );
+            //modelBuilder.Entity<Wishlist>().HasData(
+            //    new { Id = 1, Name = "Secret Santa 2020", Password = "", DueDate = DateTime.Now },
+            //    new { Id = 2, Name = "SSD Completion Party", Password = "ssd", DueDate = new DateTime(2020, 5, 14, 13, 00, 02) },
+            //    new { Id = 3, Name = "Secret Santa 2020", Password = "", DueDate = DateTime.Now }
+            //);
 
             //modelBuilder.Entity<Item>().HasData(
             //    new

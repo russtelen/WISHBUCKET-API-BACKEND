@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GiftWishlist.Migrations
 {
-    public partial class Init : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -31,7 +31,6 @@ namespace GiftWishlist.Migrations
                     Name = table.Column<string>(nullable: true),
                     IsComplete = table.Column<bool>(nullable: false),
                     WishlistID = table.Column<int>(nullable: false),
-                    OwnerEmail = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     ImageURL = table.Column<string>(nullable: true),
                     PurchaseURL = table.Column<string>(nullable: true),
@@ -47,21 +46,6 @@ namespace GiftWishlist.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.InsertData(
-                table: "Wishlists",
-                columns: new[] { "Id", "DueDate", "Name", "Password" },
-                values: new object[] { 1, new DateTime(2020, 12, 9, 10, 36, 35, 990, DateTimeKind.Local).AddTicks(478), "Secret Santa 2020", "" });
-
-            migrationBuilder.InsertData(
-                table: "Wishlists",
-                columns: new[] { "Id", "DueDate", "Name", "Password" },
-                values: new object[] { 2, new DateTime(2020, 5, 14, 13, 0, 2, 0, DateTimeKind.Unspecified), "SSD Completion Party", "ssd" });
-
-            migrationBuilder.InsertData(
-                table: "Wishlists",
-                columns: new[] { "Id", "DueDate", "Name", "Password" },
-                values: new object[] { 3, new DateTime(2020, 12, 9, 10, 36, 35, 993, DateTimeKind.Local).AddTicks(3492), "Secret Santa 2020", "" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Items_WishlistID",
