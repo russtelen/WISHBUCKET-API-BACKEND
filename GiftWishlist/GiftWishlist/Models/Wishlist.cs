@@ -12,7 +12,7 @@ namespace GiftWishlist.Models
 
         public Wishlist()
         {
-            this.Items = new List<Item>();
+            Items = new List<Item>();
         }
         public string Name { get; set; }
         public string Password { get; set; }

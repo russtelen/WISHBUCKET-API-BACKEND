@@ -2,6 +2,7 @@
 using GiftWishlist.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -68,11 +69,10 @@ namespace GiftWishlist.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] Wishlist wishlist)
         {
-            if (wishlist.Id <= 0) // Any other bad inputs?
+            if (wishlist.Name == "") // Any other bad inputs?
             {
                 return BadRequest();
-            }
-
+            }  
             _db.Wishlists.Add(wishlist);
             _db.SaveChanges();
             //return CreatedAtRoute("GetOne", new { id = wishlist.Id });
@@ -126,12 +126,11 @@ namespace GiftWishlist.Controllers
 
             try
             {
-                var wishlist = _db.Wishlists.Where(t => t.Id == listId).FirstOrDefault();
-                if (wishlist == null || wishlist.Items.Count < 1)
+                var items = _db.Items.Where(i => i.WishlistID == listId).ToList();
+                if (items == null)
                 {
                     return NotFound();
                 }
-                var items = wishlist.Items.ToList();
                 return Ok(items);
             }
             catch (Exception e)
@@ -147,13 +146,8 @@ namespace GiftWishlist.Controllers
         {
             try
             {
-                var wishlist = _db.Wishlists.Where(t => t.Id == listId).FirstOrDefault();
-                if (wishlist == null)
-                {
-                    return NotFound();
-                }
-   
-                var item = wishlist.Items.Where(i => i.Id == itemId).FirstOrDefault();
+           
+                var item = _db.Items.Where(i => i.Id == itemId && i.WishlistID == listId).FirstOrDefault();
 
                 if (item == null)
                 {
@@ -171,7 +165,7 @@ namespace GiftWishlist.Controllers
         [Route("{listId}/item/")]
         public IActionResult CreateItem(int listId, [FromBody] Item item)
         {
-            if (item.Name == null || item.Name == "" || !item.IsComplete)
+            if (item.Name == null || item.Name == "")
             {
                 return BadRequest();
             }
@@ -200,7 +194,7 @@ namespace GiftWishlist.Controllers
                     return NotFound();
                 }
 
-                var item = wishlist.Items.Where(i => i.Id == itemId).FirstOrDefault();
+                var item = _db.Items.Where(i => i.Id == itemId && i.WishlistID == listId).FirstOrDefault();
                 wishlist.Items.Remove(item);
                 _db.SaveChanges();
                 return new ObjectResult(item);
@@ -215,9 +209,8 @@ namespace GiftWishlist.Controllers
         [Route("{listId}/item/{itemId}")]
         public IActionResult GetByParams(int listId, int itemId, [FromBody] Item newItem)
         {
-            var wishlist = _db.Wishlists.Where(t => t.Id == listId).FirstOrDefault();
-            var item = wishlist.Items.Where(i => i.Id == itemId).FirstOrDefault();
-            if (wishlist == null || item == null)
+            var item = _db.Items.Where(i => i.Id == itemId && i.WishlistID == listId).FirstOrDefault();
+            if (item == null)
             {
                 return NotFound();
             }

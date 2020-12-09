@@ -34,9 +34,6 @@ namespace GiftWishlist.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("OwnerEmail")
-                        .HasColumnType("TEXT");
-
                     b.Property<decimal?>("Price")
                         .HasColumnType("TEXT");
 
@@ -71,29 +68,6 @@ namespace GiftWishlist.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Wishlists");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DueDate = new DateTime(2020, 12, 9, 10, 36, 35, 990, DateTimeKind.Local).AddTicks(478),
-                            Name = "Secret Santa 2020",
-                            Password = ""
-                        },
-                        new
-                        {
-                            Id = 2,
-                            DueDate = new DateTime(2020, 5, 14, 13, 0, 2, 0, DateTimeKind.Unspecified),
-                            Name = "SSD Completion Party",
-                            Password = "ssd"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            DueDate = new DateTime(2020, 12, 9, 10, 36, 35, 993, DateTimeKind.Local).AddTicks(3492),
-                            Name = "Secret Santa 2020",
-                            Password = ""
-                        });
                 });
 
             modelBuilder.Entity("GiftWishlist.Models.Item", b =>
