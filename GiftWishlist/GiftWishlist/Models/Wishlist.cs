@@ -10,6 +10,10 @@ namespace GiftWishlist.Models
     public class Wishlist:BaseEntity
     {
 
+        public Wishlist()
+        {
+            this.Items = new List<Item>();
+        }
         public string Name { get; set; }
         public string Password { get; set; }
         public DateTime? DueDate { get; set; }

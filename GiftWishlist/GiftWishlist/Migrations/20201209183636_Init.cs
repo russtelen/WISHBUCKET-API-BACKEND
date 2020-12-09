@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace GiftWishlist.Data.Migrations
+namespace GiftWishlist.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -30,32 +30,28 @@ namespace GiftWishlist.Data.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(nullable: true),
                     IsComplete = table.Column<bool>(nullable: false),
+                    WishlistID = table.Column<int>(nullable: false),
+                    OwnerEmail = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     ImageURL = table.Column<string>(nullable: true),
                     PurchaseURL = table.Column<string>(nullable: true),
-                    Price = table.Column<decimal>(nullable: true),
-                    WishlistId = table.Column<int>(nullable: true)
+                    Price = table.Column<decimal>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Items", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Items_Wishlists_WishlistId",
-                        column: x => x.WishlistId,
+                        name: "FK_Items_Wishlists_WishlistID",
+                        column: x => x.WishlistID,
                         principalTable: "Wishlists",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.InsertData(
-                table: "Items",
-                columns: new[] { "Id", "Description", "ImageURL", "IsComplete", "Name", "Price", "PurchaseURL", "WishlistId" },
-                values: new object[] { 1, "", "", false, "Socks", 12.00m, "", null });
 
             migrationBuilder.InsertData(
                 table: "Wishlists",
                 columns: new[] { "Id", "DueDate", "Name", "Password" },
-                values: new object[] { 1, new DateTime(2020, 12, 8, 19, 33, 59, 684, DateTimeKind.Local).AddTicks(9207), "Secret Santa 2020", "" });
+                values: new object[] { 1, new DateTime(2020, 12, 9, 10, 36, 35, 990, DateTimeKind.Local).AddTicks(478), "Secret Santa 2020", "" });
 
             migrationBuilder.InsertData(
                 table: "Wishlists",
@@ -65,22 +61,12 @@ namespace GiftWishlist.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Wishlists",
                 columns: new[] { "Id", "DueDate", "Name", "Password" },
-                values: new object[] { 3, new DateTime(2020, 12, 8, 19, 33, 59, 687, DateTimeKind.Local).AddTicks(9799), "Secret Santa 2020", "" });
-
-            migrationBuilder.InsertData(
-                table: "Items",
-                columns: new[] { "Id", "Description", "ImageURL", "IsComplete", "Name", "Price", "PurchaseURL", "WishlistId" },
-                values: new object[] { 2, "", "", false, "Mug", 10.00m, "", 1 });
-
-            migrationBuilder.InsertData(
-                table: "Items",
-                columns: new[] { "Id", "Description", "ImageURL", "IsComplete", "Name", "Price", "PurchaseURL", "WishlistId" },
-                values: new object[] { 3, "", "", false, "Gaming Mouse", 50.00m, "", 2 });
+                values: new object[] { 3, new DateTime(2020, 12, 9, 10, 36, 35, 993, DateTimeKind.Local).AddTicks(3492), "Secret Santa 2020", "" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Items_WishlistId",
+                name: "IX_Items_WishlistID",
                 table: "Items",
-                column: "WishlistId");
+                column: "WishlistID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

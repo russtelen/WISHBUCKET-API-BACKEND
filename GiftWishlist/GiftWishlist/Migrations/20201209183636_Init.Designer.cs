@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace GiftWishlist.Data.Migrations
+namespace GiftWishlist.Migrations
 {
     [DbContext(typeof(WishContext))]
-    [Migration("20201209033400_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20201209183636_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,54 +36,23 @@ namespace GiftWishlist.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("OwnerEmail")
+                        .HasColumnType("TEXT");
+
                     b.Property<decimal?>("Price")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("PurchaseURL")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("WishlistId")
+                    b.Property<int>("WishlistID")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("WishlistId");
+                    b.HasIndex("WishlistID");
 
                     b.ToTable("Items");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "",
-                            ImageURL = "",
-                            IsComplete = false,
-                            Name = "Socks",
-                            Price = 12.00m,
-                            PurchaseURL = ""
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "",
-                            ImageURL = "",
-                            IsComplete = false,
-                            Name = "Mug",
-                            Price = 10.00m,
-                            PurchaseURL = "",
-                            WishlistId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "",
-                            ImageURL = "",
-                            IsComplete = false,
-                            Name = "Gaming Mouse",
-                            Price = 50.00m,
-                            PurchaseURL = "",
-                            WishlistId = 2
-                        });
                 });
 
             modelBuilder.Entity("GiftWishlist.Models.Wishlist", b =>
@@ -109,7 +78,7 @@ namespace GiftWishlist.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DueDate = new DateTime(2020, 12, 8, 19, 33, 59, 684, DateTimeKind.Local).AddTicks(9207),
+                            DueDate = new DateTime(2020, 12, 9, 10, 36, 35, 990, DateTimeKind.Local).AddTicks(478),
                             Name = "Secret Santa 2020",
                             Password = ""
                         },
@@ -123,7 +92,7 @@ namespace GiftWishlist.Data.Migrations
                         new
                         {
                             Id = 3,
-                            DueDate = new DateTime(2020, 12, 8, 19, 33, 59, 687, DateTimeKind.Local).AddTicks(9799),
+                            DueDate = new DateTime(2020, 12, 9, 10, 36, 35, 993, DateTimeKind.Local).AddTicks(3492),
                             Name = "Secret Santa 2020",
                             Password = ""
                         });
@@ -133,7 +102,9 @@ namespace GiftWishlist.Data.Migrations
                 {
                     b.HasOne("GiftWishlist.Models.Wishlist", null)
                         .WithMany("Items")
-                        .HasForeignKey("WishlistId");
+                        .HasForeignKey("WishlistID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
