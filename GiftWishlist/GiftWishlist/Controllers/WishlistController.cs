@@ -142,7 +142,7 @@ namespace GiftWishlist.Controllers
         }
 
         [HttpGet]
-        [Route("{listId}/item/{itemId}")]
+        [Route("{listId}/item/{itemId}", Name ="GetItem")]
         public IActionResult GetItemById(int listId, int itemId)
         {
             try
@@ -180,7 +180,7 @@ namespace GiftWishlist.Controllers
                 var wishlist = _db.Wishlists.Where(t => t.Id == listId).FirstOrDefault();
                 wishlist.Items.Add(item);
                 _db.SaveChanges();
-                return Ok(wishlist);
+                return CreatedAtRoute("GetItem", new {listId = wishlist.Id, itemId = item.Id }, item);
             }
             catch (Exception e)
             {
