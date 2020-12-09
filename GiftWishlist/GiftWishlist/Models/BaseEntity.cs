@@ -7,15 +7,9 @@ using System.Threading.Tasks;
 
 namespace GiftWishlist.Models
 {
-    public class Wishlist:BaseEntity
+    public abstract class BaseEntity
     {
-
-        public string Name { get; set; }
-        public string Password { get; set; }
-        public DateTime? DueDate { get; set; }
-
-        public virtual ICollection<Item> Items { get; set; } 
-
-
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public virtual int Id { get; set; }
     }
 }

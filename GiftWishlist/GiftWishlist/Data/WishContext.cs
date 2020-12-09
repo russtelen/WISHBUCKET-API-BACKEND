@@ -15,9 +15,10 @@ namespace GiftWishlist.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            
             // Seed Data
             modelBuilder.Entity<Wishlist>().HasData(
-                new { Id = 1, Name = "Secret Santa 2020", Password = "", DueDate = DateTime.Now },
+                new { Id = 1, Name = "Secret Santa 2020", Password = "", DueDate = DateTime.Now},
                 new { Id = 2, Name = "SSD Completion Party", Password = "ssd", DueDate = new DateTime(2020, 5, 14, 13, 00, 02) },
                 new { Id = 3, Name = "Secret Santa 2020", Password = "", DueDate = DateTime.Now }
             );
@@ -26,13 +27,13 @@ namespace GiftWishlist.Data
                 new
                 {
                     Id = 1,
-                    WishlistId = 1,
                     Name = "Socks",
                     IsComplete = false,
                     Description = "",
                     ImageURL = "",
                     PurchaseURL = "",
-                    Price = 12.00m
+                    Price = 12.00m,
+                    OwnerId = 1
                 },
                  new
                  {
@@ -43,7 +44,8 @@ namespace GiftWishlist.Data
                      Description = "",
                      ImageURL = "",
                      PurchaseURL = "",
-                     Price = 10.00m
+                     Price = 10.00m,
+                     OwnerId = 1
                  },
                   new
                   {
@@ -54,7 +56,8 @@ namespace GiftWishlist.Data
                       Description = "",
                       ImageURL = "",
                       PurchaseURL = "",
-                      Price = 50.00m
+                      Price = 50.00m,
+                      OwnerId = 2
                   }
             );
 
