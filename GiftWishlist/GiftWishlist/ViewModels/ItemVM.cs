@@ -7,6 +7,8 @@ namespace GiftWishlist.ViewModels
 {
     public class ItemVM
     {
+        public int Id { get; set; }
+        public int WishlistID { get; set; }
         public string Name { get; set; }
         public bool IsComplete { get; set; }
 

@@ -26,6 +26,7 @@ namespace GiftWishlist.Controllers
         {
             return _db.Wishlists.Select(w => new WishlistVM
             {
+                Id = w.Id,
                 Name = w.Name,
                 Password = w.Password,
                 DueDate = w.DueDate
@@ -61,20 +62,14 @@ namespace GiftWishlist.Controllers
         {
             try
             {
-                var wishlist = _db.Wishlists.Where(t => t.Id == id)
-                    .Select(w => new WishlistVM
-                    {
-                        Name = w.Name,
-                        Password = w.Password,
-                        DueDate = w.DueDate
-                    })
+                var wishlist = WishlistsToVM()
+                    .Where(t => t.Id == id)
                     .FirstOrDefault();
 
                 if (wishlist == null)
                 {
                     return NotFound();
                 }
-                _db.SaveChanges();
                 return Ok(wishlist);
             }
             catch (Exception e)
