@@ -1,5 +1,6 @@
 ﻿using GiftWishlist.Data;
 using GiftWishlist.Models;
+using GiftWishlist.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,16 @@ namespace GiftWishlist.Controllers
             _db = db;
         }
 
+        private List<WishlistVM> WishlistsToVM()
+        {
+            return _db.Wishlists.Select(w => new WishlistVM
+            {
+                Name = w.Name,
+                Password = w.Password,
+                DueDate = w.DueDate
+            }).ToList();
+        }
+
         // GetAll() is automatically recognized as
         // https://localhost:<port #>/api/todo
         [HttpGet]
@@ -29,7 +40,7 @@ namespace GiftWishlist.Controllers
 
             try
             {
-                var wishlist = _db.Wishlists.ToList();
+                var wishlist = WishlistsToVM();
                 if (wishlist == null || wishlist.Count < 1)
                 {
                     return NotFound();
@@ -50,7 +61,15 @@ namespace GiftWishlist.Controllers
         {
             try
             {
-                var wishlist = _db.Wishlists.Where(t => t.Id == id).FirstOrDefault();
+                var wishlist = _db.Wishlists.Where(t => t.Id == id)
+                    .Select(w => new WishlistVM
+                    {
+                        Name = w.Name,
+                        Password = w.Password,
+                        DueDate = w.DueDate
+                    })
+                    .FirstOrDefault();
+
                 if (wishlist == null)
                 {
                     return NotFound();
@@ -84,7 +103,9 @@ namespace GiftWishlist.Controllers
         {
             try
             {
-                var wishlist = _db.Wishlists.Where(t => t.Id == newWishlist.Id).FirstOrDefault();
+                var wishlist = _db.Wishlists
+                    .Where(t => t.Id == newWishlist.Id)
+                    .FirstOrDefault();
 
                 if (wishlist == null)
                 {
