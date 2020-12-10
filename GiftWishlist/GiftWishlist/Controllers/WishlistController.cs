@@ -1,6 +1,7 @@
 ﻿using GiftWishlist.Data;
 using GiftWishlist.Models;
 using GiftWishlist.ViewModels;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace GiftWishlist.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
     public class WishlistController : ControllerBase
@@ -86,11 +88,11 @@ namespace GiftWishlist.Controllers
         }
 
 
-        [Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         public IActionResult Create([FromBody] Wishlist wishlist)
         {
-            if (wishlist.Name == "" || !ModelState.IsValid) // Any other bad inputs?
+            if (wishlist.Name == "" || wishlist.Name == null|| !ModelState.IsValid) // Any other bad inputs?
             {
                 return BadRequest();
             }  
@@ -100,7 +102,7 @@ namespace GiftWishlist.Controllers
             return Ok();
         }
 
-        [Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPut]
         public IActionResult Update([FromBody] Wishlist newWishlist)
         {
@@ -128,7 +130,7 @@ namespace GiftWishlist.Controllers
             }
         }
 
-        [Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpDelete]
         public IActionResult Delete(long Id)
         {
@@ -185,7 +187,7 @@ namespace GiftWishlist.Controllers
                 return BadRequest(e);
             }
         }
-        [Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         [Route("{listId}/item/")]
         public IActionResult CreateItem(int listId, [FromBody] Item item)
@@ -206,7 +208,7 @@ namespace GiftWishlist.Controllers
                 return BadRequest(e);
             }
         }
-        [Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpDelete]
         [Route("{listId}/item/{itemId}")]
         public IActionResult DeleteItem(int listId, int itemId)
@@ -230,7 +232,7 @@ namespace GiftWishlist.Controllers
             }
         }
 
-        [Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPut]
         [Route("{listId}/item/{itemId}")]
         public IActionResult GetByParams(int listId, int itemId, [FromBody] Item newItem)
