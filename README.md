@@ -11,6 +11,10 @@
 Elevator Pitch:
 A lightweight application with a slick look and feel featuring shareable wishlists in an easy breeze. Quickly create a wishlist for yourself or someone else, and share it with others - the days of unwanted or duplicated gifts are over!
 
+#### Front-End Project:
+
+https://github.com/BCIT-SSD-2020-21/dotnetproject-team6_netproject-FRONTEND.git
+
 ### Figma Wireframe
 
 Figma URL: https://www.figma.com/file/qOWCw5hQsP4Xu5bkBxXUcq/WishBucket?node-id=0%3A1
