@@ -1,6 +1,7 @@
 ﻿using GiftWishlist.Data;
 using GiftWishlist.Models;
 using GiftWishlist.ViewModels;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,10 +9,12 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace GiftWishlist.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
     public class WishlistController : ControllerBase
@@ -21,6 +24,16 @@ namespace GiftWishlist.Controllers
         public WishlistController(WishContext db)
         {
             _db = db;
+        }
+
+        private bool CheckIfOwner(Wishlist wishlist)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (wishlist.OwnerId != userId)
+            {
+                return false;
+            }
+            return true;
         }
 
         //private List<WishlistVM> WishlistsToVM()
@@ -86,21 +99,25 @@ namespace GiftWishlist.Controllers
         }
 
 
-        [Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         public IActionResult Create([FromBody] Wishlist wishlist)
         {
-            if (wishlist.Name == "" || !ModelState.IsValid) // Any other bad inputs?
+            if (wishlist.Name == "" || wishlist.Name == null|| !ModelState.IsValid) // Any other bad inputs?
             {
                 return BadRequest();
-            }  
+            }
+
+            // Set the owner Id to the current user id
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            wishlist.OwnerId = userId;
             _db.Wishlists.Add(wishlist);
             _db.SaveChanges();
             //return CreatedAtRoute("GetOne", new { id = wishlist.Id });
             return Ok();
         }
 
-        [Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPut]
         public IActionResult Update([FromBody] Wishlist newWishlist)
         {
@@ -113,6 +130,11 @@ namespace GiftWishlist.Controllers
                 if (wishlist == null || !ModelState.IsValid)
                 {
                     return NotFound();
+                }
+
+                if (!CheckIfOwner(wishlist))
+                {
+                    return Unauthorized();
                 }
 
                 wishlist.Name = newWishlist.Name;
@@ -128,11 +150,17 @@ namespace GiftWishlist.Controllers
             }
         }
 
-        [Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpDelete]
+        [Route("{Id}")]
         public IActionResult Delete(long Id)
         {
             var item = _db.Wishlists.Where(t => t.Id == Id).FirstOrDefault();
+
+            if (!CheckIfOwner(item)){
+                    return Unauthorized();
+                }
+
             if (item == null)
             {
                 return NotFound();
@@ -185,7 +213,7 @@ namespace GiftWishlist.Controllers
                 return BadRequest(e);
             }
         }
-        [Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         [Route("{listId}/item/")]
         public IActionResult CreateItem(int listId, [FromBody] Item item)
@@ -197,6 +225,10 @@ namespace GiftWishlist.Controllers
             try
             {
                 var wishlist = _db.Wishlists.Where(t => t.Id == listId).FirstOrDefault();
+                if (!CheckIfOwner(wishlist))
+                {
+                    return Unauthorized();
+                }
                 wishlist.Items.Add(item);
                 _db.SaveChanges();
                 return CreatedAtRoute("GetItem", new {listId = wishlist.Id, itemId = item.Id }, item);
@@ -206,7 +238,7 @@ namespace GiftWishlist.Controllers
                 return BadRequest(e);
             }
         }
-        [Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpDelete]
         [Route("{listId}/item/{itemId}")]
         public IActionResult DeleteItem(int listId, int itemId)
@@ -217,6 +249,10 @@ namespace GiftWishlist.Controllers
                 if (wishlist == null)
                 {
                     return NotFound();
+                }
+                if (!CheckIfOwner(wishlist))
+                {
+                    return Unauthorized();
                 }
 
                 var item = _db.Items.Where(i => i.Id == itemId && i.WishlistID == listId).FirstOrDefault();
@@ -230,12 +266,19 @@ namespace GiftWishlist.Controllers
             }
         }
 
-        [Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPut]
         [Route("{listId}/item/{itemId}")]
         public IActionResult GetByParams(int listId, int itemId, [FromBody] Item newItem)
         {
             var item = _db.Items.Where(i => i.Id == itemId && i.WishlistID == listId).FirstOrDefault();
+
+            var wishlist = _db.Wishlists.Where(t => t.Id == listId).FirstOrDefault();
+
+            if (!CheckIfOwner(wishlist))
+            {
+                return Unauthorized();
+            }
             if (item == null)
             {
                 return NotFound();

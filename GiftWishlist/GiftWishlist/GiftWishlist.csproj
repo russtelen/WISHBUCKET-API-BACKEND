@@ -6,24 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20201209172733_Init.cs" />
-    <Compile Remove="Migrations\20201209172733_Init.Designer.cs" />
-    <Compile Remove="Migrations\20201209174956_Init.cs" />
-    <Compile Remove="Migrations\20201209174956_Init.Designer.cs" />
-    <Compile Remove="Migrations\20201209182118_Init.cs" />
-    <Compile Remove="Migrations\20201209182118_Init.Designer.cs" />
-    <Compile Remove="Migrations\20201209183040_Init.cs" />
-    <Compile Remove="Migrations\20201209183040_Init.Designer.cs" />
-    <Compile Remove="Migrations\20201209183636_Init.cs" />
-    <Compile Remove="Migrations\20201209183636_Init.Designer.cs" />
-    <Compile Remove="Migrations\20201209193323_Init.cs" />
-    <Compile Remove="Migrations\20201209193323_Init.Designer.cs" />
-    <Compile Remove="Migrations\20201209193842_T.cs" />
-    <Compile Remove="Migrations\20201209193842_T.Designer.cs" />
-    <Compile Remove="Migrations\20201209203347_InitialMigration.cs" />
-    <Compile Remove="Migrations\20201209203347_InitialMigration.Designer.cs" />
-    <Compile Remove="Migrations\20201209234647_InitialMigration.cs" />
-    <Compile Remove="Migrations\20201209234647_InitialMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\20201210200746_InitialMigration.cs" />
+    <Compile Remove="Data\Migrations\20201210200746_InitialMigration.Designer.cs" />
+    <Compile Remove="Migrations\20201210200255_InitialMigration.cs" />
+    <Compile Remove="Migrations\20201210200255_InitialMigration.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,6 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Data\Migrations\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 

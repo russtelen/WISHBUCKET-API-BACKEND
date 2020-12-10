@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using GiftWishlist.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -22,20 +23,22 @@ namespace GiftWishlist.Areas.Identity
                     options.UseSqlite(
                         context.Configuration.GetConnectionString("AuthContextConnection")));
 
+                JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
                 services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(OptionsBuilderConfigurationExtensions =>
-                {
-                    OptionsBuilderConfigurationExtensions.TokenValidationParameters = new TokenValidationParameters
+                    .AddJwtBearer(options =>
                     {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        ValidIssuer = context.Configuration["JWT_ISSUER"],
-                        ValidAudience = context.Configuration["JWT_ISSUER"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(context.Configuration["JWT_SITEKEY"]))
-                    };
-                });
+                        options.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateIssuer = true,
+                            ValidateAudience = true,
+                            ValidateLifetime = true,
+                            ValidateIssuerSigningKey = true,
+                            ValidIssuer = context.Configuration["JWT_ISSUER"],
+                            ValidAudience = context.Configuration["JWT_ISSUER"],
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(context.Configuration["JWT_SITEKEY"]))
+                        };
+                    });
 
                 services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                     .AddEntityFrameworkStores<AuthContext>();
