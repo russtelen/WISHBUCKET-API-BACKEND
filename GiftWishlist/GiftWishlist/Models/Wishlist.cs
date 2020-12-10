@@ -17,8 +17,7 @@ namespace GiftWishlist.Models
         public string Name { get; set; }
         public string Password { get; set; }
         public DateTime? DueDate { get; set; }
-
-        private string OwnerId {get; set;}
+        public string OwnerId {get; set;}
 
         public virtual ICollection<Item> Items { get; set; } 
 
