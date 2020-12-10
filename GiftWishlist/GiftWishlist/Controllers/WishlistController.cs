@@ -75,18 +75,48 @@ namespace GiftWishlist.Controllers
             
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet]
+        [Route("owned")]
+        public IActionResult GetAllOwned()
+        {
+
+            try
+            {
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var wishlist = _db.Wishlists
+                    .Include(i => i.Items)
+                    .Where(w => w.OwnerId == userId)
+                    .ToList();
+
+                if (wishlist == null || wishlist.Count < 1)
+                {
+                    return NotFound();
+                }
+
+                return Ok(wishlist);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+
+        }
+
         //Detail
         [HttpGet("{id}", Name = "GetOne")]
         public IActionResult GetById(int id, string password)
         {
             try
             {
+
                 var wishlist = _db.Wishlists
                     .Include(i => i.Items)
-                    .Where(t => t.Id == id && t.Password == password)
+                    .Where(t => t.Id == id)
                     .FirstOrDefault();
 
-                if (wishlist == null)
+                // Only check for a password if a wishlist password was set
+                if (wishlist == null || (wishlist.Password != "" && (wishlist.Password != password)))
                 {
                     return NotFound();
                 }
