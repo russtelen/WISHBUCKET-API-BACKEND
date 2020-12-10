@@ -1,6 +1,7 @@
 ﻿using GiftWishlist.Data;
 using GiftWishlist.Models;
 using GiftWishlist.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -44,6 +45,7 @@ namespace GiftWishlist.Controllers
             {
                 var wishlist = _db.Wishlists
                     .Include(i => i.Items)
+                    .Where(w => w.Password == "")
                     .ToList();
 
                 if (wishlist == null || wishlist.Count < 1)
@@ -62,13 +64,13 @@ namespace GiftWishlist.Controllers
 
         //Detail
         [HttpGet("{id}", Name = "GetOne")]
-        public IActionResult GetById(int id)
+        public IActionResult GetById(int id, string password)
         {
             try
             {
                 var wishlist = _db.Wishlists
                     .Include(i => i.Items)
-                    .Where(t => t.Id == id)
+                    .Where(t => t.Id == id && t.Password == password)
                     .FirstOrDefault();
 
                 if (wishlist == null)
@@ -84,7 +86,7 @@ namespace GiftWishlist.Controllers
         }
 
 
-
+        [Authorize]
         [HttpPost]
         public IActionResult Create([FromBody] Wishlist wishlist)
         {
@@ -98,6 +100,7 @@ namespace GiftWishlist.Controllers
             return Ok();
         }
 
+        [Authorize]
         [HttpPut]
         public IActionResult Update([FromBody] Wishlist newWishlist)
         {
@@ -125,6 +128,7 @@ namespace GiftWishlist.Controllers
             }
         }
 
+        [Authorize]
         [HttpDelete]
         public IActionResult Delete(long Id)
         {
@@ -181,12 +185,12 @@ namespace GiftWishlist.Controllers
                 return BadRequest(e);
             }
         }
-
+        [Authorize]
         [HttpPost]
         [Route("{listId}/item/")]
         public IActionResult CreateItem(int listId, [FromBody] Item item)
         {
-            if (item.Name == null || item.Name == ""|| !ModelState.IsValid)
+            if (item.Name == null || item.Name == "" || !ModelState.IsValid)
             {
                 return BadRequest();
             }
@@ -202,7 +206,7 @@ namespace GiftWishlist.Controllers
                 return BadRequest(e);
             }
         }
-
+        [Authorize]
         [HttpDelete]
         [Route("{listId}/item/{itemId}")]
         public IActionResult DeleteItem(int listId, int itemId)
@@ -226,6 +230,7 @@ namespace GiftWishlist.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut]
         [Route("{listId}/item/{itemId}")]
         public IActionResult GetByParams(int listId, int itemId, [FromBody] Item newItem)

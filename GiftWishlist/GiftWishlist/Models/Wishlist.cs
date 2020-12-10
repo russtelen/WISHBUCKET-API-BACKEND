@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GiftWishlist.Models
 {
-    public class Wishlist:BaseEntity
+    public class Wishlist : BaseEntity
     {
 
         public Wishlist()
@@ -17,6 +17,8 @@ namespace GiftWishlist.Models
         public string Name { get; set; }
         public string Password { get; set; }
         public DateTime? DueDate { get; set; }
+
+        private string OwnerId {get; set;}
 
         public virtual ICollection<Item> Items { get; set; } 
 
