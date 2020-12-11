@@ -42,6 +42,19 @@ namespace GiftWishlist.Areas.Identity
 
                 services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                     .AddEntityFrameworkStores<AuthContext>();
+
+                services.AddCors(options =>
+                {
+                    options.AddPolicy("AllowAll",
+                        builder =>
+                        {
+                            builder
+                            .AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader();
+                        });
+                });
+
             });
         }
     }
