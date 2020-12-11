@@ -20,7 +20,7 @@ namespace GiftWishlist.Areas.Identity
         {
             builder.ConfigureServices((context, services) => {
                 services.AddDbContext<AuthContext>(options =>
-                    options.UseSqlite(
+                    options.UseSqlServer(
                         context.Configuration.GetConnectionString("AuthContextConnection")));
 
                 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();

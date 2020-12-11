@@ -29,7 +29,7 @@ namespace GiftWishlist
         {
             //Wish Connection String
             services.AddDbContext<WishContext>(options => 
-                options.UseSqlite(Configuration.GetConnectionString("WishConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("WishConnection")));
 
             //Configure CORS
             services.AddCors(options =>

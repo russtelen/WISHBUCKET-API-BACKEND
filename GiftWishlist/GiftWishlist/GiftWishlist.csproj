@@ -6,12 +6,23 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Data\Migrations\20201210200746_InitialMigration.cs" />
-    <Compile Remove="Data\Migrations\20201210200746_InitialMigration.Designer.cs" />
-    <Compile Remove="Migrations\20201210200255_InitialMigration.cs" />
-    <Compile Remove="Migrations\20201210200255_InitialMigration.Designer.cs" />
-    <Compile Remove="Migrations\20201210215055_InitialMigration.cs" />
-    <Compile Remove="Migrations\20201210215055_InitialMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\**" />
+    <Compile Remove="Migrations\**" />
+    <Content Remove="Data\Migrations\**" />
+    <Content Remove="Migrations\**" />
+    <EmbeddedResource Remove="Data\Migrations\**" />
+    <EmbeddedResource Remove="Migrations\**" />
+    <None Remove="Data\Migrations\**" />
+    <None Remove="Migrations\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Migrations\20201211195826_InitialMigration.cs" />
+    <Compile Include="Migrations\20201211195826_InitialMigration.Designer.cs" />
+    <Compile Include="Migrations\Auth\20201211195731_AuthMigration.cs" />
+    <Compile Include="Migrations\Auth\20201211195731_AuthMigration.Designer.cs" />
+    <Compile Include="Migrations\Auth\AuthContextModelSnapshot.cs" />
+    <Compile Include="Migrations\WishContextModelSnapshot.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,11 +39,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Data\Migrations\" />
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 
