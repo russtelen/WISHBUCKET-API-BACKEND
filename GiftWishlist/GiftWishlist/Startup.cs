@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 
 namespace GiftWishlist
 {
@@ -44,6 +45,10 @@ namespace GiftWishlist
                     });
             });
 
+            services.AddSwaggerGen(c => {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Wishlist API", Version = "v1" });
+            });
+
             services.AddControllers();
             services.AddControllers().AddNewtonsoftJson();
         }
@@ -69,6 +74,13 @@ namespace GiftWishlist
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Wishlist API V1");
+                c.RoutePrefix = string.Empty;
             });
         }
     }
