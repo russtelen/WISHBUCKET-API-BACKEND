@@ -82,7 +82,7 @@ namespace GiftWishlist.Controllers
 
             try
             {
-                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var userId = HttpContext.User.Claims.ElementAt(0).Value;
                 var wishlist = _db.Wishlists
                     .Include(i => i.Items)
                     .Where(w => w.OwnerId == userId)
