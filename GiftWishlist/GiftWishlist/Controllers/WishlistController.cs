@@ -58,7 +58,7 @@ namespace GiftWishlist.Controllers
             {
                 var wishlist = _db.Wishlists
                     .Include(i => i.Items)
-                    .Where(w => w.Password == "")
+                    .Where(w => w.Password == "" || w.Password == null)
                     .ToList();
 
                 if (wishlist == null || wishlist.Count < 1)
@@ -138,13 +138,14 @@ namespace GiftWishlist.Controllers
                 return BadRequest();
             }
 
+            // Default the password to an empty string
+            wishlist.Password ??= "";
             // Set the owner Id to the current user id
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string userId = HttpContext.User.Identity.Name;
             wishlist.OwnerId = userId;
             _db.Wishlists.Add(wishlist);
             _db.SaveChanges();
-            //return CreatedAtRoute("GetOne", new { id = wishlist.Id });
-            return Ok();
+            return CreatedAtRoute("GetOne", new { id = wishlist.Id}, wishlist);
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
