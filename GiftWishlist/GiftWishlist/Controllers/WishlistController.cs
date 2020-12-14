@@ -58,7 +58,7 @@ namespace GiftWishlist.Controllers
             {
                 var wishlist = _db.Wishlists
                     .Include(i => i.Items)
-                    .Where(w => w.Password == "")
+                    .Where(w => w.Password == "" || w.Password == null)
                     .ToList();
 
                 if (wishlist == null || wishlist.Count < 1)
@@ -138,6 +138,8 @@ namespace GiftWishlist.Controllers
                 return BadRequest();
             }
 
+            // Default the password to an empty string
+            wishlist.Password ??= "";
             // Set the owner Id to the current user id
             string userId = HttpContext.User.Identity.Name;
             wishlist.OwnerId = userId;
