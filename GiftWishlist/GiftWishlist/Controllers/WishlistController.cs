@@ -26,10 +26,10 @@ namespace GiftWishlist.Controllers
             _db = db;
         }
 
-        private bool CheckIfOwner(Wishlist wishlist)
+        // Todo move claim check logic inside this function
+        private bool CheckIfOwner(Wishlist wishlist, string userEmail)
         {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (wishlist.OwnerId != userId)
+            if (wishlist.OwnerId != userEmail)
             {
                 return false;
             }
@@ -48,8 +48,7 @@ namespace GiftWishlist.Controllers
         //    }).ToList();
         //}
 
-        // GetAll() is automatically recognized as
-        // https://localhost:<port #>/api/todo
+
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -141,7 +140,7 @@ namespace GiftWishlist.Controllers
             // Default the password to an empty string
             wishlist.Password ??= "";
             // Set the owner Id to the current user id
-            string userId = HttpContext.User.Identity.Name;
+            string userId = HttpContext.User.Claims.ElementAt(0).Value;
             wishlist.OwnerId = userId;
             _db.Wishlists.Add(wishlist);
             _db.SaveChanges();
@@ -163,7 +162,7 @@ namespace GiftWishlist.Controllers
                     return NotFound();
                 }
 
-                if (!CheckIfOwner(wishlist))
+                if (!CheckIfOwner(wishlist, HttpContext.User.Claims.ElementAt(0).Value))
                 {
                     return Unauthorized();
                 }
@@ -188,7 +187,7 @@ namespace GiftWishlist.Controllers
         {
             var item = _db.Wishlists.Where(t => t.Id == Id).FirstOrDefault();
 
-            if (!CheckIfOwner(item)){
+            if (!CheckIfOwner(item, HttpContext.User.Claims.ElementAt(0).Value)){
                     return Unauthorized();
                 }
 
@@ -256,7 +255,7 @@ namespace GiftWishlist.Controllers
             try
             {
                 var wishlist = _db.Wishlists.Where(t => t.Id == listId).FirstOrDefault();
-                if (!CheckIfOwner(wishlist))
+                if (!CheckIfOwner(wishlist, HttpContext.User.Claims.ElementAt(0).Value))
                 {
                     return Unauthorized();
                 }
@@ -281,7 +280,7 @@ namespace GiftWishlist.Controllers
                 {
                     return NotFound();
                 }
-                if (!CheckIfOwner(wishlist))
+                if (!CheckIfOwner(wishlist, HttpContext.User.Claims.ElementAt(0).Value))
                 {
                     return Unauthorized();
                 }
@@ -306,7 +305,7 @@ namespace GiftWishlist.Controllers
 
             var wishlist = _db.Wishlists.Where(t => t.Id == listId).FirstOrDefault();
 
-            if (!CheckIfOwner(wishlist))
+            if (!CheckIfOwner(wishlist, HttpContext.User.Claims.ElementAt(0).Value))
             {
                 return Unauthorized();
             }
