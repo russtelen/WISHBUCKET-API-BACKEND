@@ -6,6 +6,8 @@
 - Vlad
 - Russ
 
+A public version of the API is published at https://giftwishlist1.azurewebsites.net/ The root url provides the swagger documentation for the api routes.
+
 # Wishbucket - Easy Wishlists
 
 Elevator Pitch:
@@ -14,6 +16,7 @@ A lightweight application with a slick look and feel featuring shareable wishlis
 #### Front-End Project:
 
 https://github.com/BCIT-SSD-2020-21/dotnetproject-team6_netproject-FRONTEND.git
+
 
 ### Figma Wireframe
 
@@ -94,6 +97,14 @@ Figma URL: https://www.figma.com/file/qOWCw5hQsP4Xu5bkBxXUcq/WishBucket?node-id=
 - Due date notifications
 - Item status notification
 - Security (recaptcha, login request delay, user password requirements)
+
+# Installation Instructions
+
+The app requires appsettings.json to follow the format provided in the `appsettingsTEMPLATE.json` file placed in the project folder. The app also requires a running SQL or Azure SQL instance that the app can be connected to. Before running the app the `WishContext` and `AuthContext` migrations have to be run in order to configure the required tables, and the default seed data.
+
+The app requires the user secrets to follow the format provided in the `secretsTEMPLATE.json` file placed in the project folder.
+In order for the authentication to function the `JWT_SITEKEY` has to be at least 16 characters long, and `JWT_ISSUER` has to be set to the url that the app is running on
+
 
 # Timeline 🕗
 
