@@ -158,8 +158,14 @@ namespace GiftWishlist.Controllers
                     .FirstOrDefault();
 
                 if (wishlist == null || !ModelState.IsValid)
+
                 {
                     return NotFound();
+                }
+
+                if (!ModelState.IsValid || newWishlist.Name == "")
+                {
+                    return BadRequest();
                 }
 
                 if (!CheckIfOwner(wishlist, HttpContext.User.Claims.ElementAt(0).Value))
@@ -169,6 +175,7 @@ namespace GiftWishlist.Controllers
 
                 wishlist.Name = newWishlist.Name;
                 wishlist.DueDate = newWishlist.DueDate;
+                wishlist.Password = newWishlist.Password;
 
                 _db.SaveChanges();
 
