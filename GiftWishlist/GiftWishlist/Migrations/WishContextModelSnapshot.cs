@@ -116,7 +116,7 @@ namespace GiftWishlist.Migrations
                         new
                         {
                             Id = 1,
-                            DueDate = new DateTime(2020, 12, 11, 11, 58, 25, 771, DateTimeKind.Local).AddTicks(8706),
+                            DueDate = new DateTime(2020, 12, 17, 12, 42, 8, 597, DateTimeKind.Local).AddTicks(7800),
                             Name = "Secret Santa 2020",
                             Password = ""
                         },
@@ -130,7 +130,7 @@ namespace GiftWishlist.Migrations
                         new
                         {
                             Id = 3,
-                            DueDate = new DateTime(2020, 12, 11, 11, 58, 25, 776, DateTimeKind.Local).AddTicks(8210),
+                            DueDate = new DateTime(2020, 12, 17, 12, 42, 8, 601, DateTimeKind.Local).AddTicks(681),
                             Name = "Secret Santa 2020",
                             Password = ""
                         });

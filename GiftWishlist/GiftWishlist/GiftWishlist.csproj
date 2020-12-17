@@ -17,8 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Migrations\20201211195826_InitialMigration.cs" />
-    <Compile Include="Migrations\20201211195826_InitialMigration.Designer.cs" />
+    <Compile Include="Migrations\20201217204209_InitialMigration.cs" />
+    <Compile Include="Migrations\20201217204209_InitialMigration.Designer.cs" />
     <Compile Include="Migrations\Auth\20201211195731_AuthMigration.cs" />
     <Compile Include="Migrations\Auth\20201211195731_AuthMigration.Designer.cs" />
     <Compile Include="Migrations\Auth\AuthContextModelSnapshot.cs" />

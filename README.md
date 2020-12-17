@@ -105,6 +105,16 @@ The app requires appsettings.json to follow the format provided in the `appsetti
 The app requires the user secrets to follow the format provided in the `secretsTEMPLATE.json` file placed in the project folder.
 In order for the authentication to function the `JWT_SITEKEY` has to be at least 16 characters long, and `JWT_ISSUER` has to be set to the url that the app is running on
 
+## Replicating the migrations
+The necessary migrations for AuthContext and WishContext are already included with the project. However, the following steps can replicate it 
+
+```
+Add-Migration -Context AuthContext
+Add-Migration -Context WishContext
+Update-Database -Context AuthContext
+Update-Database -Context WishContext
+```
+
 
 # Timeline 🕗
 
