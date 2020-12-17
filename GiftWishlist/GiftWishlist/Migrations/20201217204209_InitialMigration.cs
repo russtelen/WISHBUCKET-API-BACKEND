@@ -51,7 +51,7 @@ namespace GiftWishlist.Migrations
             migrationBuilder.InsertData(
                 table: "Wishlists",
                 columns: new[] { "Id", "DueDate", "Name", "OwnerId", "Password" },
-                values: new object[] { 1, new DateTime(2020, 12, 11, 11, 58, 25, 771, DateTimeKind.Local).AddTicks(8706), "Secret Santa 2020", null, "" });
+                values: new object[] { 1, new DateTime(2020, 12, 17, 12, 42, 8, 597, DateTimeKind.Local).AddTicks(7800), "Secret Santa 2020", null, "" });
 
             migrationBuilder.InsertData(
                 table: "Wishlists",
@@ -61,7 +61,7 @@ namespace GiftWishlist.Migrations
             migrationBuilder.InsertData(
                 table: "Wishlists",
                 columns: new[] { "Id", "DueDate", "Name", "OwnerId", "Password" },
-                values: new object[] { 3, new DateTime(2020, 12, 11, 11, 58, 25, 776, DateTimeKind.Local).AddTicks(8210), "Secret Santa 2020", null, "" });
+                values: new object[] { 3, new DateTime(2020, 12, 17, 12, 42, 8, 601, DateTimeKind.Local).AddTicks(681), "Secret Santa 2020", null, "" });
 
             migrationBuilder.InsertData(
                 table: "Items",
