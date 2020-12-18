@@ -15,8 +15,7 @@ A lightweight application with a slick look and feel featuring shareable wishlis
 
 #### Front-End Project:
 
-https://github.com/BCIT-SSD-2020-21/dotnetproject-team6_netproject-FRONTEND.git
-
+https://github.com/russtelen/WISHBUCKET
 
 ### Figma Wireframe
 
